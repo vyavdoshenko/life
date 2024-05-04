@@ -1,3 +1,6 @@
+mod game;
+use game::GameOfLife;
+
 use clap::{arg, crate_authors, crate_description, crate_version, value_parser, Command};
 
 fn main() {
@@ -8,20 +11,20 @@ fn main() {
         .arg(
             arg!(-r --rows <VALUE> "Sets the number of rows")
                 .required(true)
-                .value_parser(value_parser!(u16)),
+                .value_parser(value_parser!(usize)),
         )
         .arg(
             arg!(-c --columns <VALUE> "Sets the number of columns")
                 .required(true)
-                .value_parser(value_parser!(u16)),
+                .value_parser(value_parser!(usize)),
         )
         .get_matches();
 
-    let rows = matches.get_one::<u16>("rows").expect("required argument");
+    let rows = matches.get_one::<usize>("rows").expect("required argument");
     let columns = matches
-        .get_one::<u16>("columns")
+        .get_one::<usize>("columns")
         .expect("required argument");
 
-    println!("Number of rows: {}", rows);
-    println!("Number of columns: {}", columns);
+    let game = GameOfLife::new(*rows, *columns);
+    game.print();
 }
