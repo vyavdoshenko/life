@@ -7,7 +7,7 @@ This is a simple implementation of the game of life in Rust.
 ```sh
 cargo build
 cd taget/debug/
-target/debug/life --rows 85 --columns 180 --ms 300 
+./life --rows 85 --columns 180 --ms 300 
 ```
 
 ## Demo
