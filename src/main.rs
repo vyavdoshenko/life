@@ -18,17 +18,23 @@ fn main() {
                 .required(true)
                 .value_parser(value_parser!(usize)),
         )
+        .arg(
+            arg!(-m --ms <VALUE> "Sets the delay in milliseconds")
+                .required(true)
+                .value_parser(value_parser!(u64)),
+        )
         .get_matches();
 
     let rows = matches.get_one::<usize>("rows").expect("required argument");
     let columns = matches
         .get_one::<usize>("columns")
         .expect("required argument");
+    let ms = matches.get_one::<u64>("ms").expect("required argument");
 
     let mut game = GameOfLife::new(*rows, *columns);
     loop {
         game.print();
         game.generate_next_states();
-        std::thread::sleep(std::time::Duration::from_millis(400));
+        std::thread::sleep(std::time::Duration::from_millis(*ms));
     }
 }
