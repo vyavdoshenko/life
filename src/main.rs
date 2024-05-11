@@ -25,6 +25,10 @@ fn main() {
         .get_one::<usize>("columns")
         .expect("required argument");
 
-    let game = GameOfLife::new(*rows, *columns);
-    game.print();
+    let mut game = GameOfLife::new(*rows, *columns);
+    loop {
+        game.print();
+        game.generate_next_states();
+        std::thread::sleep(std::time::Duration::from_millis(400));
+    }
 }
